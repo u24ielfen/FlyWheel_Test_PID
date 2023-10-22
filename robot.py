@@ -2,21 +2,16 @@ import wpilib
 from rev import CANSparkMax
 import commands2
 from wpilib import SmartDashboard
+from robot_container import RobotContainer
+from commands2 import CommandScheduler
 
 
 class MyRobot(commands2.TimedCommandRobot):
-    def autonomousInit(self) -> None:
-        SmartDashboard.init()
-        return super().autonomousInit()
+    def robotInit(self) -> None:
+        self.container = RobotContainer()
 
-    def autonomousPeriodic(self) -> None:
-        return super().autonomousPeriodic()
-
-    def teleopInit(self) -> None:
-        return super().teleopInit()
-
-    def teleopPeriodic(self) -> None:
-        return super().teleopPeriodic()
+    def robotPeriodic(self) -> None:
+        CommandScheduler.getInstance().run()
 
 
 if __name__ == "__main__":
