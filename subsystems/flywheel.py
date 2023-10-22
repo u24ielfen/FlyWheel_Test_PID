@@ -22,6 +22,9 @@ class Flywheel(PIDSubsystem):
         output = self.clamp(output, -1, 1)
         self.motor.set(output)
 
+    def _getMeasurement(self) -> float:
+        return self.motor.getEncoder().getVelocity()
+
     def periodic(self) -> None:
         return super().periodic()
 
