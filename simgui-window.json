@@ -42,7 +42,7 @@
     },
     "###RoboRIO": {
       "Collapsed": "0",
-      "Pos": "312,161",
+      "Pos": "340,136",
       "Size": "141,164"
     },
     "###System Joysticks": {
@@ -53,7 +53,7 @@
     "###Timing": {
       "Collapsed": "0",
       "Pos": "6,187",
-      "Size": "162,142"
+      "Size": "162,168"
     },
     "Debug##Default": {
       "Collapsed": "0",

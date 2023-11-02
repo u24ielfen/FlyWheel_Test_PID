@@ -2,31 +2,37 @@ from wpimath.controller import PIDController
 from commands2 import PIDSubsystem
 from rev import CANSparkMax, CANSparkMaxLowLevel
 from constants import FlywheelConstants
+from wpilib import SmartDashboard
 
 
 class Flywheel(PIDSubsystem):
-    def __init__(self, controller: PIDController, initialPosition: float = 0) -> None:
-        super().__init__(controller, initialPosition)
+    def __init__(self, initialPosition: float = 0) -> None:
+        super().__init__(
+            PIDController(
+                FlywheelConstants.kP, FlywheelConstants.kI, FlywheelConstants.kD
+            )
+        )
         self.motor = CANSparkMax(
             FlywheelConstants.flywheel_motor_id,
             CANSparkMaxLowLevel.MotorType.kBrushless,
         )
-        self.motor.setIdleMode(CANSparkMax.IdleMode.kBrake)
-        encoder = self.motor.getEncoder()
+
+        self.motor.setIdleMode(CANSparkMax.IdleMode.kCoast)
+        self.encoder = self.motor.getEncoder()
         self.setSetpoint(0)
-        self.getController().setTolerance(
-            FlywheelConstants.position_tolerance, FlywheelConstants.velocity_tolerance
-        )
+        self.getController().setTolerance()
 
     def _useOutput(self, output: float, setpoint: float) -> None:
         output = self.clamp(output, -1, 1)
         self.motor.set(output)
 
     def _getMeasurement(self) -> float:
-        return self.motor.getEncoder().getVelocity()
+        return self.encoder.getVelocity()
 
     def periodic(self) -> None:
-        return super().periodic()
+        super().periodic()
+        SmartDashboard.putBoolean("PID Subsystem Enabled", self.isEnabled())
+        SmartDashboard.putNumber("PID Setpoint", self.getSetpoint())
 
     def clamp(n, min, max):
         if n < min:
