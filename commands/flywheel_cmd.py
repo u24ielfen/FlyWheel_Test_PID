@@ -1,5 +1,6 @@
 from commands2 import CommandBase
 from subsystems.flywheel import Flywheel
+from wpilib import SmartDashboard
 
 
 class FlywheelCMD(CommandBase):
@@ -7,6 +8,7 @@ class FlywheelCMD(CommandBase):
         super().__init__()
         self.flywheel = flywheel
         self.addRequirements(flywheel)
+        SmartDashboard.putNumber("Setpoint", 0.0)
 
     def initialize(self) -> None:
         self.done = False
@@ -15,7 +17,7 @@ class FlywheelCMD(CommandBase):
         if self.flywheel.isEnabled() == False:
             self.flywheel.enable()
 
-        self.flywheel.setSetpoint(2000)
+        self.flywheel.setSetpoint(SmartDashboard.getNumber("Setpoint", 0.0))
         self.done = True
 
     def isFinished(self) -> bool:

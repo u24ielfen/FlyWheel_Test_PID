@@ -1,12 +1,10 @@
 class FlywheelConstants:
     flywheel_motor_id = 23
-    velocity_tolerance = 100
-    position_tolerance = 10
-    kP = 1.0
+    velocity_tolerance = 0.0
+    position_tolerance = 0.0
+    kP = 0.00001
     kI = 0.0
     kD = 0.0
-    kV = 0.0
-    max_acc = 0.0
 
 
 class ButtonMappings:

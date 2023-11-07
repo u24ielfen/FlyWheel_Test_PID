@@ -13,12 +13,6 @@ class RobotContainer:
         self.configure_button_bindings()
 
     def configure_button_bindings(self):
-        # button.JoystickButton(self.controller, ButtonMappings.A).whileTrue(
-        # FlywheelCMD(self.flywheel)
-        # )
-        if True:
+        button.JoystickButton(self.controller, ButtonMappings.A).onTrue(
             FlywheelCMD(self.flywheel)
-        # pass
-
-    def get_autonomous_command(self):
-        return None
+        )
